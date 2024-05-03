@@ -1,0 +1,43 @@
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push, or for pull requests against master
+  push:
+  pull_request:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  linux:
+    runs-on: 'ubuntu-latest'
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v4
+      with:
+        show-progress: false
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install libreofficekit-dev libreoffice
+    - name: Build
+      run: |
+        g++ -Wall -W -g -O2 loktest.cc -o loktest -ldl
+        LO_PATH=/usr/lib/libreoffice/program ./loktest in.html out.doc
+
+  macos:
+    runs-on: 'macos-latest'
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v4
+      with:
+        show-progress: false
+    - name: Install dependencies
+      run: |
+        ls -l /Applications
+        brew update
+        brew install libreoffice
+    - name: Build
+      run: |
+        g++ -Wall -W -g -O2 -Iinclude loktest.cc -o loktest -ldl
+        LO_PATH=/Applications/LibreOffice.app/Contents/Frameworks ./loktest in.html out.doc
