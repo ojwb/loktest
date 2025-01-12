@@ -32,12 +32,8 @@
     #include <dlfcn.h>
 
     #ifdef __APPLE__
-        #if defined TARGET_OS_IPHONE && TARGET_OS_IPHONE == 1
-            #define TARGET_LIB        "lib" "sofficeapp" ".dylib"
-            #define TARGET_MERGED_LIB "lib" "mergedlo" ".dylib"
-        #else
-            #error LibreOfficeKit is only supported on iOS
-        #endif
+        #define TARGET_LIB        "lib" "sofficeapp" ".dylib"
+        #define TARGET_MERGED_LIB "lib" "mergedlo" ".dylib"
     #else
         #define TARGET_LIB        "lib" "sofficeapp" ".so"
         #define TARGET_MERGED_LIB "lib" "mergedlo" ".so"
